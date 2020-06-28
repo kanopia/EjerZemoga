@@ -1,25 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="content">
-        <div class="user">
-            <div class="image-profile">
-                {% if user.image is null %}
-                    <img src="{{ asset('build/without-profile-image.png') }}">
-                {% else %}
-                    <img src="{{ asset('build/without-profile-imagse.png') }}">
-                {% endif %}
-            </div>
-            <h1>{{ user.name }}</h1>
-        </div>
-        <div class="data-user">
-            <div class="info-user">
-                <h2>{{ user.title }}</h2>
-                <p>{{ user.description }}</p>
-            </div>
-            <div class="tweets">
-                twitter
-            </div>
+    <div class="container">
+        <div class="row">
+            <dic class="col-3 user align-items-center justify-content-center">
+                <div class="image-profile align-items-center justify-content-center">
+                    {% if user.image is null %}
+                        <img src="{{ asset('build/without-profile-image.png') }}">
+                    {% else %}
+                        <img src="{{ asset('build/without-profile-imagse.png') }}">
+                    {% endif %}
+                </div>
+                <h1 class="align-items-center justify-content-center">{{ user.name }}</h1></dic>
+            <dic class="col data-user align-items-center justify-content-center">
+                <div class="info-user justify-content-center">
+                    <h2>{{ user.title }}</h2>
+                    <p>{{ user.description }}</p>
+                </div>
+                <div class="tweets justify-content-center">
+                    twitter
+                </div>
+            </dic>
         </div>
     </div>
 {% endblock %}

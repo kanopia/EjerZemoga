@@ -37,6 +37,11 @@ class User
      */
     private $description;
 
+    /**
+     * @ORM\OneToOne(targetEntity=TwitterAuth::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $twitterAuth;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +91,23 @@ class User
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getNick(): ?TwitterAuth
+    {
+        return $this->twitterAuth;
+    }
+
+    public function setNick(TwitterAuth $twitterAuth): self
+    {
+        $this->twitterAuth = $twitterAuth;
+
+        // set the owning side of the relation if necessary
+        if ($twitterAuth->getUser() !== $this) {
+            $twitterAuth->setUser($this);
+        }
 
         return $this;
     }

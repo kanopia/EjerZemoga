@@ -38,7 +38,7 @@ class FillDataBaseCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $user = new User();
-        $user->setName('Ronald Lopez');
+        $user->setName('Ronald Lopez Jaramillo');
         $user->setTitle('About me');
         $user->setDescription('I great person');
         $this->entityManager->persist($user);

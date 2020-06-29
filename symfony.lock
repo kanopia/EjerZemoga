@@ -1,4 +1,7 @@
 {
+    "abraham/twitteroauth": {
+        "version": "0.9.2"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -80,6 +83,12 @@
     },
     "egulias/email-validator": {
         "version": "2.1.18"
+    },
+    "endroid/installer": {
+        "version": "1.2.3"
+    },
+    "endroid/twitter": {
+        "version": "2.1.0"
     },
     "monolog/monolog": {
         "version": "2.1.0"

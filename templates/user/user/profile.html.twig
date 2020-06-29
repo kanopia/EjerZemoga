@@ -13,14 +13,63 @@
                 </div>
                 <h1 class="align-items-center justify-content-center">{{ user.name }}</h1></dic>
             <dic class="col data-user align-items-center justify-content-center">
-                <div class="info-user justify-content-center">
+                <div class="box justify-content-center">
                     <h2>{{ user.title }}</h2>
+                    <hr>
                     <p>{{ user.description }}</p>
                 </div>
-                <div class="tweets justify-content-center">
-                    twitter
+                <div class="box">
+                    {% set nameArray = user.name|split(' ') %}
+                    <h3>{{ nameArray[0]~'\''~nameArray[1]|first }} Timeline</h3>
+                    <hr>
+                    <div id="tweets" class="tweets text-center"></div>
                 </div>
             </dic>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function () {
+            let url = window.location.protocol + '//' + window.location.hostname + "/api/twitter/tweets/1";
+            let card =
+                '<div id="tweet-%id%" class="container tweet text-left">' +
+                '<div class="row">' +
+                '<div class="col-1 image-tweet" style="margin: 10px">' +
+                '<img src="%image%">' +
+                '</div>' +
+                '<div class="col-9" style="padding: 10px; margin-left: 5px;">' +
+                '<div class="row">' +
+                '<div class="col"><strong>%name%</strong></div>' +
+                '</div>' +
+                '<div class="row">' +
+                '<div class="col">' +
+                '<p>%message%</p>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+            let $tweets = $('#tweets');
+            $.get(url, function (data, status) {
+                if (data != null) {
+                    data.forEach((item, index) => {
+                        let insertCard = card.replace('%name%', item.user.name);
+                        insertCard = insertCard.replace('%id%', index);
+                        insertCard = insertCard.replace('%message%', item.text);
+                        if (item.user.profile_image_url != null) {
+                            insertCard = insertCard.replace('%image%', item.user.profile_image_url);
+                        } else {
+                            insertCard = insertCard.replace('%image%', '/build/without-profile-image.png');
+                        }
+                        $tweets.append(insertCard);
+                    });
+                } else {
+                    $tweets.innerHTML = 'No Found Tweets!';
+                }
+            });
+        });
+    </script>
 {% endblock %}

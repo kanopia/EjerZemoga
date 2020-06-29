@@ -24,9 +24,25 @@ class TwitterAuth
     private $user;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $password;
+    private $consumerKey;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $consumerSecret;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $oauthToken;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $oauthTokenSecret;
+
 
     public function getId(): ?int
     {
@@ -45,14 +61,50 @@ class TwitterAuth
         return $this;
     }
 
-    public function getPassword(): ?string
+    public function getConsumerKey(): ?string
     {
-        return $this->password;
+        return $this->consumerKey;
     }
 
-    public function setPassword(string $password): self
+    public function setConsumerKey(?string $consumerKey): self
     {
-        $this->password = $password;
+        $this->consumerKey = $consumerKey;
+
+        return $this;
+    }
+
+    public function getConsumerSecret(): ?string
+    {
+        return $this->consumerSecret;
+    }
+
+    public function setConsumerSecret(?string $consumerSecret): self
+    {
+        $this->consumerSecret = $consumerSecret;
+
+        return $this;
+    }
+
+    public function getOauthToken(): ?string
+    {
+        return $this->oauthToken;
+    }
+
+    public function setOauthToken(?string $oauthToken): self
+    {
+        $this->oauthToken = $oauthToken;
+
+        return $this;
+    }
+
+    public function getOauthTokenSecret(): ?string
+    {
+        return $this->oauthTokenSecret;
+    }
+
+    public function setOauthTokenSecret(?string $oauthTokenSecret): self
+    {
+        $this->oauthTokenSecret = $oauthTokenSecret;
 
         return $this;
     }

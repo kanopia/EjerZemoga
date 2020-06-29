@@ -95,12 +95,12 @@ class User
         return $this;
     }
 
-    public function getNick(): ?TwitterAuth
+    public function getTwitterAuth(): ?TwitterAuth
     {
         return $this->twitterAuth;
     }
 
-    public function setNick(TwitterAuth $twitterAuth): self
+    public function setTwitterAuth(TwitterAuth $twitterAuth): self
     {
         $this->twitterAuth = $twitterAuth;
 

@@ -15,6 +15,7 @@ Encore
     //.setManifestKeyPrefix('build/')
 
     .enableSassLoader()
+    .autoProvidejQuery()
     .copyFiles({
         from: './assets/images',
 

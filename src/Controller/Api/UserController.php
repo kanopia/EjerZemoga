@@ -1,17 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller\Api\User;
+namespace App\Controller\Api;
 
 use App\Entity\User\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class UserController
- * @package App\Controller\User
+ * @package App\Controller\Api
  * @Route("/user")
  */
 class UserController extends AbstractController

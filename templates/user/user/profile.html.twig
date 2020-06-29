@@ -3,16 +3,25 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <dic class="col-3 user align-items-center justify-content-center">
+            <div class="col-4 user align-items-center justify-content-center">
                 <div class="image-profile align-items-center justify-content-center">
+                    <div id="edit-image" class="icon-edit" data-toggle="modal" data-target="#editImage">
+                        <img src="{{ asset('build/icon-edit.png') }}">
+                    </div>
                     {% if user.image is null %}
-                        <img src="{{ asset('build/without-profile-image.png') }}">
+                        <div class="image-round">
+                            <img src="{{ asset('build/without-profile-image.png') }}">
+                        </div>
                     {% else %}
-                        <img src="{{ asset('build/without-profile-imagse.png') }}">
+                        <div class="image-round">
+                            <img src="{{ asset('images/avatars/'~user.image) }}">
+                        </div>
                     {% endif %}
                 </div>
-                <h1 class="align-items-center justify-content-center">{{ user.name }}</h1></dic>
-            <dic class="col data-user align-items-center justify-content-center">
+                <h3 class="align-items-center justify-content-center">{{ user.name }}</h3>
+
+            </div>
+            <div class="col data-user align-items-center justify-content-center">
                 <div class="box justify-content-center">
                     <h2>{{ user.title }}</h2>
                     <hr>
@@ -24,52 +33,75 @@
                     <hr>
                     <div id="tweets" class="tweets text-center"></div>
                 </div>
-            </dic>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Edit Profile-->
+    <div class="modal fade" id="editImage" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Update Data Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ form_start(form, {'action': path('update_user',{id: user.id}), 'method': 'POST'}) }}
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    {{ form_end(form) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-        $(function () {
-            let url = window.location.protocol + '//' + window.location.hostname + "/api/twitter/tweets/1";
-            let card =
-                '<div id="tweet-%id%" class="container tweet text-left">' +
-                '<div class="row">' +
-                '<div class="col-1 image-tweet" style="margin: 10px">' +
-                '<img src="%image%">' +
-                '</div>' +
-                '<div class="col-9" style="padding: 10px; margin-left: 5px;">' +
-                '<div class="row">' +
-                '<div class="col"><strong>%name%</strong></div>' +
-                '</div>' +
-                '<div class="row">' +
-                '<div class="col">' +
-                '<p>%message%</p>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>';
-            let $tweets = $('#tweets');
-            $.get(url, function (data, status) {
-                if (data != null) {
-                    data.forEach((item, index) => {
-                        let insertCard = card.replace('%name%', item.user.name);
-                        insertCard = insertCard.replace('%id%', index);
-                        insertCard = insertCard.replace('%message%', item.text);
-                        if (item.user.profile_image_url != null) {
-                            insertCard = insertCard.replace('%image%', item.user.profile_image_url);
-                        } else {
-                            insertCard = insertCard.replace('%image%', '/build/without-profile-image.png');
-                        }
-                        $tweets.append(insertCard);
-                    });
-                } else {
-                    $tweets.innerHTML = 'No Found Tweets!';
-                }
+    {% block javascripts %}
+        {{ parent() }}
+        <script>
+            $(function () {
+                let url = window.location.protocol + '//' + window.location.hostname + "/api/twitter/tweets/1";
+                let card =
+                    '<div id="tweet-%id%" class="container tweet text-left">' +
+                    '<div class="row">' +
+                    '<div class="col-1 image-tweet" style="margin: 10px">' +
+                    '<img src="%image%">' +
+                    '</div>' +
+                    '<div class="col-9" style="padding: 10px; margin-left: 5px;">' +
+                    '<div class="row">' +
+                    '<div class="col"><strong>%name%</strong></div>' +
+                    '</div>' +
+                    '<div class="row">' +
+                    '<div class="col">' +
+                    '<p>%message%</p>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+                let $tweets = $('#tweets');
+                $.get(url, function (data, status) {
+                    if (data != null) {
+                        data.forEach((item, index) => {
+                            let insertCard = card.replace('%name%', item.user.name);
+                            insertCard = insertCard.replace('%id%', index);
+                            insertCard = insertCard.replace('%message%', item.text);
+                            if (item.user.profile_image_url != null) {
+                                insertCard = insertCard.replace('%image%', item.user.profile_image_url);
+                            } else {
+                                insertCard = insertCard.replace('%image%', '/build/without-profile-image.png');
+                            }
+                            $tweets.append(insertCard);
+                        });
+                    } else {
+                        $tweets.innerHTML = 'No Found Tweets!';
+                    }
+                });
             });
-        });
-    </script>
-{% endblock %}
+        </script>
+    {% endblock %}

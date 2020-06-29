@@ -4,9 +4,12 @@ namespace App\Entity\User;
 
 use App\Repository\User\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @Vich\Uploadable()
  */
 class User
 {
@@ -21,6 +24,12 @@ class User
      * @ORM\Column(type="string", length=255)
      */
     private $name;
+
+    /**
+     * @Vich\UploadableField(mapping="avatars", fileNameProperty="image")
+     * @var File|null
+     */
+    private $file;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -42,16 +51,26 @@ class User
      */
     private $twitterAuth;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     * @return $this
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -59,11 +78,34 @@ class User
         return $this;
     }
 
+    /**
+     * @param File|null $file
+     */
+    public function setFile(?File $file = null): void
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
+    /**
+     * @return string|null
+     */
     public function getImage(): ?string
     {
         return $this->image;
     }
 
+    /**
+     * @param string|null $image
+     * @return $this
+     */
     public function setImage(?string $image): self
     {
         $this->image = $image;
@@ -71,11 +113,18 @@ class User
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
+    /**
+     * @param string $title
+     * @return $this
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -83,11 +132,18 @@ class User
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
+    /**
+     * @param string $description
+     * @return $this
+     */
     public function setDescription(string $description): self
     {
         $this->description = $description;
@@ -95,11 +151,18 @@ class User
         return $this;
     }
 
+    /**
+     * @return TwitterAuth|null
+     */
     public function getTwitterAuth(): ?TwitterAuth
     {
         return $this->twitterAuth;
     }
 
+    /**
+     * @param TwitterAuth $twitterAuth
+     * @return $this
+     */
     public function setTwitterAuth(TwitterAuth $twitterAuth): self
     {
         $this->twitterAuth = $twitterAuth;

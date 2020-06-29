@@ -44,16 +44,26 @@ class TwitterAuth
     private $oauthTokenSecret;
 
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return User|null
+     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
+    /**
+     * @param User $user
+     * @return $this
+     */
     public function setUser(User $user): self
     {
         $this->user = $user;
@@ -61,11 +71,18 @@ class TwitterAuth
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getConsumerKey(): ?string
     {
         return $this->consumerKey;
     }
 
+    /**
+     * @param string|null $consumerKey
+     * @return $this
+     */
     public function setConsumerKey(?string $consumerKey): self
     {
         $this->consumerKey = $consumerKey;
@@ -73,11 +90,18 @@ class TwitterAuth
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getConsumerSecret(): ?string
     {
         return $this->consumerSecret;
     }
 
+    /**
+     * @param string|null $consumerSecret
+     * @return $this
+     */
     public function setConsumerSecret(?string $consumerSecret): self
     {
         $this->consumerSecret = $consumerSecret;
@@ -85,11 +109,18 @@ class TwitterAuth
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getOauthToken(): ?string
     {
         return $this->oauthToken;
     }
 
+    /**
+     * @param string|null $oauthToken
+     * @return $this
+     */
     public function setOauthToken(?string $oauthToken): self
     {
         $this->oauthToken = $oauthToken;
@@ -97,11 +128,18 @@ class TwitterAuth
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getOauthTokenSecret(): ?string
     {
         return $this->oauthTokenSecret;
     }
 
+    /**
+     * @param string|null $oauthTokenSecret
+     * @return $this
+     */
     public function setOauthTokenSecret(?string $oauthTokenSecret): self
     {
         $this->oauthTokenSecret = $oauthTokenSecret;

@@ -19,19 +19,32 @@ class UserType extends AbstractType
             ->add('file', VichFileType::class, [
                 'label' => 'Picture Profile',
                 'required' => false,
-                'allow_delete' => false
+                'allow_delete' => false,
+                'attr' => [
+                    'class' => 'w-100'
+                ]
             ])
             ->add('name', TextType::class, [
                 'label' => 'Name',
-                'required' => true
+                'required' => true,
+                'attr' => [
+                    'class' => 'w-100'
+                ]
             ])
             ->add('title', TextType::class, [
                 'label' => 'Title',
-                'required' => true
+                'required' => true,
+                'attr' => [
+                    'class' => 'w-100'
+                ]
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
-                'required' => true
+                'required' => true,
+                'attr' => [
+                    'class' => 'w-100',
+                    'rows' => 5
+                ]
             ]);
     }
 

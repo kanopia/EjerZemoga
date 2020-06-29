@@ -49,13 +49,24 @@
                 </div>
                 <div class="modal-body">
                     {{ form_start(form, {'action': path('update_user',{id: user.id}), 'method': 'POST'}) }}
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <h6 class="pt-2">{{ form_label(form.file) }}</h6>
+                    <div>{{ form_widget(form.file) }}</div>
+
+                    <h6 class="pt-2">{{ form_label(form.name) }}</h6>
+                    <div>{{ form_widget(form.name) }}</div>
+
+                    <h6 class="pt-2">{{ form_label(form.title) }}</h6>
+                    <div>{{ form_widget(form.title) }}</div>
+
+                    <h6 class="pt-2">{{ form_label(form.description) }}</h6>
+                    <div>{{ form_widget(form.description) }}</div>
+                    <div class="modal-footer mt-3">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
                     {{ form_end(form) }}
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </div>
+
             </div>
         </div>
     </div>

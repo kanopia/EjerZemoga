@@ -18,7 +18,8 @@ class UserType extends AbstractType
         $builder
             ->add('file', VichFileType::class, [
                 'label' => 'Picture Profile',
-                'required' => false
+                'required' => false,
+                'allow_delete' => false
             ])
             ->add('name', TextType::class, [
                 'label' => 'Name',

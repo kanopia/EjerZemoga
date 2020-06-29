@@ -8,7 +8,6 @@ use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -51,7 +50,6 @@ class UpdaterUserService
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                dump($user);
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
             }

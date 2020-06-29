@@ -41,7 +41,7 @@ class FillDataBaseCommand extends Command
         $newUser = new User();
         $newUser->setName('Ronald Lopez Jaramillo');
         $newUser->setTitle('About me');
-        $newUser->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nunc erat, egestas vel velit ac, hendrerit rhoncus eros. Donec nec diam eget nibh volutpat placerat. Proin mollis consectetur ante, sit amet ornare magna. Duis feugiat arcu et dictum luctus. Nam laoreet odio a enim sagittis blandit. Aenean vitae enim venenatis, rutrum metus id, hendrerit libero. Quisque ut pharetra elit. Integer pellentesque accumsan efficitur. In sit amet orci ac ipsum scelerisque vehicula ut a ex. Aenean tempor urna risus, a interdum libero ullamcorper consectetur.');
+        $newUser->setDescription('Systems engineer with emphasis on software development, I have more than 4 years of experience in web development. Management of HTML, CSS, JavaScript, PHP languages. Implementation of queuing systems. Relational database. Non-relational database Mongo, Redis. I work with the Scrum methodology. Git version manager management. Using Frameworks like Vuejs, symfony, laravel.');
         $this->entityManager->persist($newUser);
 
         $newTwitterAuth = new TwitterAuth();

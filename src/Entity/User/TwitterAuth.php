@@ -3,13 +3,17 @@
 namespace App\Entity\User;
 
 use App\Repository\User\TwitterAuthRepository;
+use App\Traits\TimestampsTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=TwitterAuthRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class TwitterAuth
 {
+    use TimestampsTrait;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

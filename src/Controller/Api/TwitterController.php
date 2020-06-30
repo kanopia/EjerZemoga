@@ -17,13 +17,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class TwitterController extends AbstractController
 {
     /**
-     * @Route("/tweets/{id}", name="get_tweets")
+     * @Route("/tweets/{id}", name="get_tweets", methods={"GET"})
      * @param TwitterApiService $twitterApi
      * @param User $user
      * @return JsonResponse
      */
     public function getTweets(TwitterApiService $twitterApi, User $user): JsonResponse
     {
-        return $twitterApi->getTweets($user);
+        try {
+            return $twitterApi->getTweets($user);
+        } catch (\Exception $exception) {
+            return new JsonResponse(['error' => $exception->getMessage()], $exception->getCode());
+        }
     }
 }

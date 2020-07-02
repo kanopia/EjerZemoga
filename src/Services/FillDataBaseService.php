@@ -32,7 +32,6 @@ class FillDataBaseService
         foreach ($this->twittersNames as $twitterName) {
             $newPortfolio = new Portfolio();
             $newPortfolio->setTwitterUserName($twitterName);
-            $newPortfolio->setSetData(false);
             $this->entityManager->persist($newPortfolio);
         }
 

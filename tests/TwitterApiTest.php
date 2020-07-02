@@ -14,7 +14,7 @@ class TwitterApiTest extends WebTestCase
     public function testResponseOk()
     {
         $client = static::createClient();
-        $client->request('GET', '/api/twitter/tweets/1');
+        $client->request('GET', '/api/twitter/tweets/Daenerys');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }

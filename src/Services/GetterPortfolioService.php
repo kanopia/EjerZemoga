@@ -65,13 +65,17 @@ class GetterPortfolioService
     {
         $portfolio = $this->portfolioRepository->findOneBy(['twitterUserName' => $twitterName]);
         if (is_null($portfolio)) {
-            throw new \Exception('Portfolio no found', 404);
+            $portfolio = $this->newPortfolio($twitterName);
         }
 
         // Has information about that profile
         if (!$portfolio->getSetData()) {
             $tweet = $this->twitterApi->getTweets($portfolio->getTwitterUserName(), 1);
-            $this->setDataProfile($portfolio, $tweet);
+            if (count($tweet) != 0) {
+                $this->setDataProfile($portfolio, $tweet);
+            } else {
+                throw new \Exception('Tweets no found', 404);
+            }
         }
 
         $form = $this->formFactory->create(PortfolioType::class, $portfolio);
@@ -82,7 +86,11 @@ class GetterPortfolioService
         ]);
     }
 
-    public function setDataProfile(Portfolio $portfolio, array $tweet)
+    /**
+     * @param Portfolio $portfolio
+     * @param array $tweet
+     */
+    public function setDataProfile(Portfolio $portfolio, array $tweet): void
     {
         $infoTweet = current($tweet);
 
@@ -94,6 +102,20 @@ class GetterPortfolioService
 
         $this->entityManager->persist($portfolio);
         $this->entityManager->flush();
+    }
+
+    /**
+     * @param string $twitterUserName
+     * @return Portfolio
+     */
+    public function newPortfolio(string $twitterUserName): Portfolio
+    {
+        $newPortfolio = new Portfolio();
+        $newPortfolio->setTwitterUserName($twitterUserName);
+        $this->entityManager->persist($newPortfolio);
+        $this->entityManager->flush();
+
+        return $newPortfolio;
     }
 
     /**

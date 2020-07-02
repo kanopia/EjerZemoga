@@ -24,3 +24,13 @@
 - Compile assets, running `yarn install && yarn encore dev` or app set config prod `yarn install && yarn encore production`
 
 I finished the test around 16 Hours.
+
+#### Get data anything profile
+The route for access is `/api/portfolio/profile/twitterName` for example `/api/portfolio/profile/rslj_25`
+
+#### Examples initial data
+- `/api/portfolio/profile/GoT_Tyrion`
+- `/api/portfolio/profile/Daenerys`
+- `/api/portfolio/profile/LordSnow`
+- `/api/portfolio/profile/Lady_Sansa`
+- `/api/portfolio/profile/GameOfThrones`

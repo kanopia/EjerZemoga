@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
-use App\Entity\Portfolio;
-use App\Form\PortfolioType;
 use App\Services\GetterPortfolioService;
 use App\Services\UpdaterPortfolioService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,17 +34,17 @@ class PortfolioController extends AbstractController
     }
 
     /**
-     * @Route("/update/{id}", name="update_portfolio", methods={"POST"})
+     * @Route("/update/{twitterName}", name="update_portfolio", methods={"POST"})
      * @param Request $request
-     * @param Portfolio $portfolio
+     * @param string $twitterName
      * @param UpdaterPortfolioService $updaterPortfolio
      * @return Response
      */
-    public function update(Request $request, Portfolio $portfolio, UpdaterPortfolioService $updaterPortfolio): Response
+    public function update(Request $request, string $twitterName, UpdaterPortfolioService $updaterPortfolio): Response
     {
         try {
-            if ($updaterPortfolio->update($portfolio, $request)) {
-                return $this->redirectToRoute('get_profile', ['id' => $portfolio->getTwitterUserName()]);
+            if ($portfolio = $updaterPortfolio->update($twitterName, $request)) {
+                return $this->redirectToRoute('get_profile', ['twitterName' => $portfolio->getTwitterUserName()]);
             }
         } catch (\Exception $exception) {
             return new JsonResponse(['error' => $exception->getMessage()], $exception->getCode());

@@ -52,7 +52,7 @@ class Portfolio
     /**
      * @ORM\Column(type="boolean")
      */
-    private $setData;
+    private $setData = false;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -123,7 +123,17 @@ class Portfolio
      */
     public function setImageUrl(?string $imageUrl): self
     {
-        $this->imageUrl = $imageUrl;
+        if (strstr($imageUrl, 'http')) {
+            $this->imageUrl = $imageUrl;
+        } else {
+            if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+                $link = "https://";
+            } else {
+                $link = "http://";
+            }
+            $link .= $_SERVER['HTTP_HOST'] . '/images/avatars/';
+            $this->imageUrl = $link . $imageUrl;
+        }
 
         return $this;
     }

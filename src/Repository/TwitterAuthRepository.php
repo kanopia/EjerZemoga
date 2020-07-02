@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository\User;
+namespace App\Repository;
 
-use App\Entity\User\TwitterAuth;
+use App\Entity\TwitterAuth;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
-use App\Entity\User\User;
+use App\Repository\TwitterAuthRepository;
 use Endroid\Twitter\Client;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -14,24 +14,75 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class TwitterApiService
 {
+
     /**
-     * @param User $user
-     * @return JsonResponse
+     * @var TwitterAuthRepository
      */
-    public function getTweets(User $user): JsonResponse
+    private $twitterAuthRepository;
+
+    /**
+     * @var Client
+     */
+    private $client;
+
+    /**
+     * TwitterApiService constructor.
+     * @param TwitterAuthRepository $twitterAuthRepository
+     */
+    public function __construct(TwitterAuthRepository $twitterAuthRepository)
     {
-        $credentialsUser = $user->getTwitterAuth();
-//        $twitterOAuth = new TwitterOAuth(
-//            $credentialsUser->getConsumerKey(),
-//            $credentialsUser->getConsumerSecret(),
-//            $credentialsUser->getOauthToken(),
-//            $credentialsUser->getOauthTokenSecret()
-//        );
-//        $client = new Client($twitterOAuth);
-//
-//        $tweets = $client->getTimeline(5);
-        $str = file_get_contents('data.json');
-        return new JsonResponse(json_decode($str));
+        $this->twitterAuthRepository = $twitterAuthRepository;
+    }
+
+    /**
+     * @param string $twitterUserName
+     * @param int $tweets
+     * @return array
+     * @throws \Exception
+     */
+    public function getTweets(string $twitterUserName, int $tweets = 5): array
+    {
+        $this->setClientOAuth();
+
+        return $this->getTweetsByData($twitterUserName, $tweets);
+    }
+
+    /**
+     * @return void
+     * @throws \Exception
+     */
+    private function setClientOAuth(): void
+    {
+        $twitterAuth = $this->twitterAuthRepository->findOneBy(['id' => 1]);
+        if (!$twitterAuth) {
+            throw new \Exception('Credentials no Found', 404);
+        }
+
+        $twitterOAuth = new TwitterOAuth(
+            $twitterAuth->getConsumerKey(),
+            $twitterAuth->getConsumerSecret(),
+            $twitterAuth->getOauthToken(),
+            $twitterAuth->getOauthTokenSecret()
+        );
+
+        $this->client = new Client($twitterOAuth);
+    }
+
+    /**
+     * @param string $twitterUserName
+     * @param int $tweets
+     * @return array
+     */
+    private function getTweetsByData(string $twitterUserName, int $tweets): array
+    {
+        $tweets = $this->client->getClient()->get(
+            'statuses/user_timeline',
+            [
+                'screen_name' => $twitterUserName,
+                'count' => $tweets
+            ]
+        );
+        return $tweets;
     }
 
 }

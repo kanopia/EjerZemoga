@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entity\User;
+namespace App\Entity;
 
-use App\Repository\User\TwitterAuthRepository;
+use App\Repository\TwitterAuthRepository;
 use App\Traits\TimestampsTrait;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,12 +20,6 @@ class TwitterAuth
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\OneToOne(targetEntity=User::class, inversedBy="twitterAuth", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -54,25 +48,6 @@ class TwitterAuth
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return User|null
-     */
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param User $user
-     * @return $this
-     */
-    public function setUser(User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
     }
 
     /**

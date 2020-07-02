@@ -3,18 +3,16 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Entity\User\User;
-use App\Form\UserType;
+use App\Form\PortfolioType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class UpdaterUserService
  * @package App\Services
  */
-class UpdaterUserService
+class UpdaterPortfolioService
 {
 
     /**
@@ -38,19 +36,19 @@ class UpdaterUserService
     }
 
     /**
-     * @param User $user
+     * @param Portfolio $portfolio
      * @param Request $request
      * @return bool
      * @throws \Exception
      */
-    public function update(User $user, Request $request): bool
+    public function update(Portfolio $portfolio, Request $request): bool
     {
         try {
-            $form = $this->formFactory->create(UserType::class, $user);
+            $form = $this->formFactory->create(PortfolioType::class, $portfolio);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $this->entityManager->persist($user);
+                $this->entityManager->persist($portfolio);
                 $this->entityManager->flush();
             }
         } catch (\Exception $exception) {

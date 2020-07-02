@@ -8,28 +8,32 @@
                     <div id="edit-image" class="icon-edit" data-toggle="modal" data-target="#editImage">
                         <img src="{{ asset('build/icon-edit.png') }}">
                     </div>
-                    {% if user.image is null %}
+                    {% if portfolio.imageUrl is null %}
                         <div class="image-round">
                             <img src="{{ asset('build/without-profile-image.png') }}">
                         </div>
                     {% else %}
                         <div class="image-round">
-                            <img src="{{ asset('images/avatars/'~user.image) }}">
+                            <img src="{{ portfolio.imageUrl }}">
                         </div>
                     {% endif %}
                 </div>
-                <h3 class="align-items-center justify-content-center">{{ user.name }}</h3>
+                <h3 class="align-items-center justify-content-center">{{ portfolio.name }}</h3>
 
             </div>
-            <div class="col data-user align-items-center justify-content-center">
+            <div class="col data-portfolio align-items-center justify-content-center">
                 <div class="box justify-content-center">
-                    <h2>{{ user.title }}</h2>
+                    <h2>{{ portfolio.title }}</h2>
                     <hr>
-                    <p>{{ user.description }}</p>
+                    <p>{{ portfolio.description }}</p>
                 </div>
                 <div class="box">
-                    {% set nameArray = user.name|split(' ') %}
-                    <h3>{{ nameArray[0]~'\''~nameArray[1]|first }} Timeline</h3>
+                    {% set nameArray = portfolio.name|split(' ') %}
+                    {% if nameArray is iterable %}
+                        <h3>{{ nameArray[0]~'\''~nameArray[1]|first }} Timeline</h3>
+                    {% else %}
+                        <h3>{{ portfolio.name|capitalize }} Timeline</h3>
+                    {% endif %}
                     <hr>
                     <div id="tweets" class="tweets text-center"></div>
                 </div>
@@ -48,7 +52,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    {{ form_start(form, {'action': path('update_user',{id: user.id}), 'method': 'POST'}) }}
+                    {{ form_start(form, {'action': path('update_portfolio',{id: portfolio.id}), 'method': 'POST'}) }}
                     <h6 class="pt-2">{{ form_label(form.file) }}</h6>
                     <div>{{ form_widget(form.file) }}</div>
 
@@ -76,7 +80,7 @@
         {{ parent() }}
         <script>
             $(function () {
-                let url = window.location.protocol + '//' + window.location.hostname + "/api/twitter/tweets/1";
+                let url = window.location.protocol + '//' + window.location.hostname + "/api/twitter/tweets/{{ portfolio.twitterUserName }}";
                 let card =
                     '<div id="tweet-%id%" class="container tweet text-left">' +
                     '<div class="row">' +
@@ -96,23 +100,23 @@
                     '</div>' +
                     '</div>';
                 let $tweets = $('#tweets');
-                $.get(url, function (data, status) {
-                    if (data != null) {
-                        data.forEach((item, index) => {
-                            let insertCard = card.replace('%name%', item.user.name);
-                            insertCard = insertCard.replace('%id%', index);
-                            insertCard = insertCard.replace('%message%', item.text);
-                            if (item.user.profile_image_url != null) {
-                                insertCard = insertCard.replace('%image%', item.user.profile_image_url);
-                            } else {
-                                insertCard = insertCard.replace('%image%', '/build/without-profile-image.png');
-                            }
-                            $tweets.append(insertCard);
-                        });
-                    } else {
-                        $tweets.innerHTML = 'No Found Tweets!';
-                    }
-                });
+                // $.get(url, function (data, status) {
+                //     if (data != null) {
+                //         data.forEach((item, index) => {
+                //             let insertCard = card.replace('%name%', item.user.name);
+                //             insertCard = insertCard.replace('%id%', index);
+                //             insertCard = insertCard.replace('%message%', item.text);
+                //             if (item.user.profile_image_url != null) {
+                //                 insertCard = insertCard.replace('%image%', item.user.profile_image_url);
+                //             } else {
+                //                 insertCard = insertCard.replace('%image%', '/build/without-profile-image.png');
+                //             }
+                //             $tweets.append(insertCard);
+                //         });
+                //     } else {
+                //         $tweets.innerHTML = 'No Found Tweets!';
+                //     }
+                // });
             });
         </script>
     {% endblock %}

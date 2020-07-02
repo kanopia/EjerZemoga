@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
-use App\Entity\User\User;
 use App\Services\TwitterApiService;
+use PHPUnit\Util\Json;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,15 +17,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class TwitterController extends AbstractController
 {
     /**
-     * @Route("/tweets/{id}", name="get_tweets", methods={"GET"})
+     * @Route("/tweets/{twitterName}", name="get_tweets", methods={"GET"})
+     * @param string $twitterName
      * @param TwitterApiService $twitterApi
-     * @param User $user
      * @return JsonResponse
      */
-    public function getTweets(TwitterApiService $twitterApi, User $user): JsonResponse
+    public function getTweets(string $twitterName, TwitterApiService $twitterApi): JsonResponse
     {
         try {
-            return $twitterApi->getTweets($user);
+            return new JsonResponse($twitterApi->getTweets($twitterName));
         } catch (\Exception $exception) {
             return new JsonResponse(['error' => $exception->getMessage()], $exception->getCode());
         }
